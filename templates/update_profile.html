@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Lite Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand">Edit Profile</a>
+        </div>
+    </nav>
+
+    <div class="water">
+        <div class="form-box">
+            <form id="register" action="{{ url_for('update_account', user = user)}}" class="inputs" action="/register" method="POST" enctype="multipart/form-data">
+                <input type="email" name="email" class="input-fields" placeholder="Email ID" value="{{ person.email }}" required>
+                <input type="text" name="username" class="input-fields" placeholder="Username" value="{{ person.username }}" disabled>
+                <input type="password" name="password1" class="input-fields" placeholder="Password" value="{{ person.password1 }}" required>
+                <input type="password" name="password2" class="input-fields" placeholder="Confirm Password" value="{{ person.password2 }}" required>
+                <button type="submit" class="submit-btn">Update Profile</button>
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>

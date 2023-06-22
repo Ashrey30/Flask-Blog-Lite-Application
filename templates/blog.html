@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <title>Blog Lite Application</title>
+</head>
+<body class="back">
+    
+    <nav class="navbar bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="color:white;">Welcome, {{ current_user.username }}</a>
+
+            <form action="/search" class="d-flex mx-auto" role="search" style="width: 500px;" method="POST">
+                <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search" required>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+
+            <a href="/create-new-blog"><button class="btn btn-primary mr-2" type="submit">Create a Post</button></a>
+            <a href="/profile"><button class="btn btn-light mr-2" type="submit">My Profile</button></a>
+            <a href="/logout"><button class="btn btn-danger" type="submit">Logout</button></a>
+        </div>
+    </nav>
+
+    <div>
+        {% if error %}
+        <div style="text-align: center; color:aliceblue; height: 100vh;">
+            <h1>{{ error }}</h1>
+        </div>
+        {% else %}
+        <div class="container my-5 m-auto">
+            <div class="row align-items-center">
+                <div class="col m-auto">
+                    {% if posts|length != 0 %}
+                        {% for post in posts %}
+                            <div class="card my-4 m-auto" style="width: 45rem; margin-top: 3%!important; margin-bottom: 3%!important;">
+                                {% if post.filename %}
+                                    <div style="text-align:center; margin-top: 10px;">
+                                        <img src="static/blog_posts/{{post.filename}}" width="600" height="400" alt="Image not loaded">
+                                    </div>
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">From <a href="/profile/{{post.by}}">{{ post.by }}</a> @ {{ post.date }}</h5>
+                                    <h3 class="card-title">{{ post.title|safe }}</h3>
+                                    <p class="card-text">{{ post.desc|safe }}</p>
+                                    <button class="button-like"><i class="fa fa-heart fa-lg"></i></button>                           
+                                </div>                            
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-dark" role="alert" style="margin-top: 10px;">
+                            Looks like you aren't following anyone. Follow other users, to see their posts.
+                        </div>
+                        {% for x in persons %}
+                            {% if x.username != current_user.username %}
+                                <div class="card">
+                                    <div class="card-body">
+                                        <a href="/profile/{{x.username}}">{{x.username}}</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

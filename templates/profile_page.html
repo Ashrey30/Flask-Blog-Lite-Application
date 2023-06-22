@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Lite Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+    
+    <nav class="navbar bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="color:white;">{{ user }}'s Dashboard</a>
+
+            <form action="/search" class="d-flex mx-auto" role="search" style="width: 500px;" method="POST">
+                <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search" required>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+
+            <a href="/create-new-blog"><button class="btn btn-primary mr-2" type="submit">Create a Post</button></a>
+            <a href="/posts"><button class="btn btn-light mr-2" type="submit">My Feed</button></a>
+            <a href="/logout"><button class="btn btn-danger" type="submit">Logout</button></a>
+        </div>
+    </nav>
+    
+    <div class="profile-body">
+        <div class="row mx-auto" style="padding-top: 20px; width: 1600px;">
+            <div class="col-md-5 mx-auto">
+                <div class="bg-white shadow rounded overflow-hidden">
+                    <div class="px-4 pt-0 pb-3 cover">
+                        <div style="margin-left: 80%; padding-top: 10px;">
+                            {% if user == current_user.username %}
+                                <a href="/delete-account/{{user}}" style="text-decoration:none; display: inline-block;" onclick="return confirm('Are you sure you want to delete this account?');"><button class="btn btn-block btn-sm btn-danger" style="height:30px; width:120px">Delete Account</button></a>
+                            {% endif %}
+                        </div>
+                        <div class="media align-items-center profile-head">
+                            <div class="profile">
+                                <img src="/static/profile_pics/{{users.pfpname}}" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                                <div class="col">
+                                    {% if user == current_user.username %}
+                                        <a href="/update-account/{{user}}" style="text-decoration:none; display: inline-block;"><button class="btn btn-outline-dark btn-sm btn-block mb-2" style="height:30px; width:90px">Edit profile</button></a>
+                                    {% else %}
+                                        {% if current_user.username not in follower_list_ %}
+                                            <a href="/follow/{{user}}" style="text-decoration:none; display: inline-block;"><button class="btn btn-block btn-sm btn-primary" style="height:30px; width:80px">Follow</button></a>
+                                        {% else %}
+                                            <a href="/unfollow/{{user}}" style="text-decoration:none; display: inline-block;"><button class="btn btn-block btn-sm btn-primary" style="height:30px; width:80px">Unfollow</button></a>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="media mb-5 text-white">
+                                <h4 class="ml-3 mt-0 mb-0">{{ user }}</h4>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-light p-4 d-flex justify-content-end text-center">
+                        <ul class="list-inline mb-0"> 
+                            <li class="list-inline-item">
+                                <h5 class="font-weight-bold mb-0 d-block">{{ posts|length }}</h5>
+                                <small class="text-muted">Posts</small>
+                            </li>
+                            <li class="list-inline-item">
+                                <h5 class="font-weight-bold mb-0 d-block">{{ follower_list_|length }}</h5>
+                                <a href="/follow-unfollow-list/{{user}}"><small class="text-muted">Followers</small></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <h5 class="font-weight-bold mb-0 d-block">{{ following_list_|length }}</h5>
+                                <a href="/follow-unfollow-list/{{user}}"><small class="text-muted">Following</small></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="py-4 px-4">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h5 class="mb-0">Recent Posts</h5>
+                        </div>
+                        <div class="col">
+                            {% if posts|length != 0 %}
+                                {% for post in posts %}
+                                    {% if post.by == user %}
+                                    <div class="card my-3 mx-auto">                                    
+                                            {% if post.filename %}
+                                                <div style="text-align:center; margin-top: 10px;">
+                                                    <img src="/static/blog_posts/{{post.filename}}" width="450" height="300" alt="Image not loaded">
+                                                </div>
+                                            {% endif %}
+                                            <div class="card-body">
+                                                <h5 class="card-title">From {{ post.by }} @ {{ post.date }}</h5>
+                                                <h3 class="card-title">{{ post.title|safe }}</h3>
+                                                <p class="card-text">{{ post.desc|safe }}</p>
+                                                <a href="update-blog/{{post.id}}" style="text-decoration:none; display: inline-block;"><button class="btn btn-block btn-sm btn-primary" style="height:30px; width:120px">Update Blog</button></a>
+                                                <a href="delete-blog/{{post.id}}" style="text-decoration:none; display: inline-block;" onclick="return confirm('Are you sure you want to delete this blog?');"><button class="btn btn-block btn-sm btn-danger" style="height:30px; width:120px">Delete Blog</button></a>                          
+                                            </div>                                                              
+                                    </div>
+                                    {% endif %} 
+                                {% endfor %}
+                            {% else %}
+                                <div class="alert alert-dark" role="alert">
+                                    Sorry but no posts were found. Try posting something.
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

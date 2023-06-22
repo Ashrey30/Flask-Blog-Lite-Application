@@ -1,0 +1,177 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.water{
+    height: 100%;
+    width: 100%;
+    background-image: url(blog.jpg);
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+}
+
+.home{
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(blog.jpg);
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+}
+
+.nope{
+    padding: 250px 0;
+    margin: 0;
+    text-align: center;
+    font-size: 50px;
+}
+
+.back{
+    background-color: rgb(51, 82, 108);
+    background-position: center;
+    height: 100vh;
+    background-attachment: fixed;
+}
+
+.form-box{
+    width: 380px;
+    height: 400px;
+    position: relative;
+    padding: 5px;
+    background: #fff;
+    margin: 6% auto;
+}
+
+.button-box{
+    width: 220px;
+    margin: 35px auto;
+    position: relative;
+    border-radius: 30px;
+}
+
+.toggle-button{
+    padding: 10px 30px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    outline: none;
+    position: relative;
+}
+
+#btn{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 110px;
+    height: 100%;
+    background: linear-gradient(to right, #f80757, #f8aa0e);
+    border-radius: 30px;
+    transition: 0.5s;
+}
+
+.inputs{
+    top: 30px;
+    width: 280px;
+    position: absolute;
+    transition: 0.5s;
+}
+
+.input-fields{
+    width: 100%;
+    padding: 10px 0;
+    margin: 5px 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #999;
+    outline: none;
+    background: transparent;
+}
+
+.submit-btn{
+    width: 85%;
+    padding: 10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: 30px auto;
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    background: linear-gradient(to right, #f80757, #f8aa0e);
+}
+
+.submit-btn-1{
+    border: 0;
+    color: white;
+    background: linear-gradient(to right, #f80757, #f8aa0e);
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 25px 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.submit-btn-2{
+    border: 1px solid white;
+    color: white;
+    background: none;
+    padding: 20px 40px;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 25px auto;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.submit-btn-2:hover{
+    color: black;
+    background: white;
+}
+
+.button-like{
+    background: white;
+    border: none;
+    color: black;
+}
+
+.button-like:focus{
+    background: white;
+    border: none;
+    color: rgb(235, 12, 101);
+}
+
+span{
+    color: #777;
+    font-size: 12px;
+    bottom: 68px;
+    position: absolute;
+}
+
+#login{
+    left: 50px;
+}
+
+#register{
+    left: 50px;
+}
+
+.profile-head{
+    transform: translateY(5rem)
+}
+
+.cover{
+    background-image: url(https://images.unsplash.com/photo-1530305408560-82d13781b33a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.profile-body{
+    background: #654ea3;
+    background: linear-gradient(to right, #e96443, #904e95);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
